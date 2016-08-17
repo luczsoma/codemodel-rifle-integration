@@ -1,0 +1,6 @@
+Gruntfile.js
+app/lib/asmcrypto.js
+app/lib/asmcrypto.min.js
+node_modules/
+bower_components/
+dist/
