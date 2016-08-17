@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Incrementally analyse JavaScript project files with the Codemodel Rifle server.
+# Incrementally analyse complex, multi-branch JavaScript repositories with Codemodel Rifle in a Git-based CI-workflow
 # Soma Lucz | Tresorit | 2016
 
 
