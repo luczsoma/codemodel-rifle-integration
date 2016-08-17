@@ -3,29 +3,6 @@
 # Incrementally analyse JavaScript project files with the Codemodel Rifle server.
 # Soma Lucz | Tresorit | 2016
 
-# SCRIPT WORKFLOW
-# ###############
-# * Verifying connection to Codemodel Rifle, query current DB state (Which was the last analysed commit on the branch?)
-# * Get git diff since the last imported commit on the branch
-# * --- If no commit was uploaded to Rifle yet, the whole repository is transpiled and uploaded
-#          (except files and directories specified in .gitignore files, see .GITIGNORE section)
-# * --- Filtering only for A (added), M (modified), D (deleted) files
-# * Transpile the diffed files with babel to a temporary location
-# * --- At transpilation error, script is aborting after cleaning up
-# * Upload the transpiled files to Rifle, and delete the deleted files from Rifle
-# * --- At network error, the script tries to upload the file again 10 times (or --max-upload-tries times)
-# * --- At possible Codemodel Rifle parsing error (server returns HTTP error 503), the script continues to
-# ? Query and output the analysis result in JSON
-
-# .GITIGNORE
-# As the upload process is fully based on the git diff, files and folders specified in .gitignore files
-# are ignored by the import and analysis process.
-
-# REQUIREMENTS
-# ############
-# * --project-git-root-path must be the Git root directory of the project with the correct branch checked out
-# * --codemodel-rifle-root-path must be the root path of the Codemodel Rifle application
-
 
 import argparse
 import subprocess
