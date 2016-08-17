@@ -1,5 +1,5 @@
 # Codemodel Rifle integration
-**With this script, incremental analysis with Codemodel Rifle can be integrated into a Git-based CI-workflow.**
+**With this script, incremental analysis of complex, multi-branch JavaScript repositories with Codemodel Rifle can be integrated into a Git-based CI-workflow.**
 
 ## Basic usage
 Code (`--help` output) is worth a thousand words:
@@ -53,21 +53,22 @@ optional arguments:
 ```
 
 ## What does it do?
-* We go to the specified git root path,
-* fetch the HEAD commit's long hash
-* fetch the current revision (branch name, or if detached, the HEAD commit's long hash),
-* fetch the last uploaded commit for the previously specified revision,
-* import files incrementally (based on git diff) or fully
+* The script goes to the specified git root path,
+* fetches the HEAD commit's long hash
+* fetches the current revision (branch name, or if detached, the HEAD commit's long hash),
+* fetches the last uploaded commit for the previously specified revision,
+* imports files incrementally (based on git diff) or fully
 	* if there is a previously uploaded commit on Codemodel Rifle on the current branch, only the differences will be uploaded to the Codemodel Rifle server (Added, Deleted and Modified files),
 	* if there is no previously uploaded commit on Codemodel Rifle on the current branch (or if explicitly stated with the -f flag), the whole repository gets uploaded.
+* goes back to the directory it was before in.
 
 ## Codemodel Rifle server
 Codemodel Rifle server is an experimental Java-based web server with a basic REST API for parsing and analysing complex JavaScript repositories based on a complex Abstract Syntax Graph *[ASG]* (adjoint Abstract Syntax Trees *[AST]*) and a Control-Flow Graph *[CFG]* created upon the ASG. The documentation of Codemodel Rifle is available of Dániel Stein @ [Tresorit](https://www.tresorit.com), Hungary.
 
-Behind the server, there is a [Shift](http://shift-ast.org) JavaScript parser and a [Neo4j graph database](https://neo4j.com). Because of the parser's limited capabilities, we need some minimal transpiling of the JavaScript files before sending them to the Codemodel Rifle server. After parsing, the ASTs of the individual files gets imported into a Neo4j graph database in graph form. After various transformation procedures, the continously maintained, for-branch-discrete graphs (ASG and CFG for each branch) can be queried.
+Behind the server, there is a [Shift](http://shift-ast.org) JavaScript parser and a [Neo4j graph database](https://neo4j.com). Because of the parser's limited capabilities, we need some minimal transpiling of the JavaScript files before sending them to the Codemodel Rifle server. The transpilation process happens with [babel](https://babeljs.io). Example configuration can be found in the **codemodel-rifle-babel** file.
 
-The transpilation process happens with [babel](https://babeljs.io). Example configuration can be found in the **codemodel-rifle-babel** file.
+After parsing, the ASTs of the individual files gets imported into a Neo4j graph database in graph form. After various transformation procedures, the continously maintained, for-branch-discrete graphs (ASG and CFG for each branch) can be queried.
 
 ## To do
-* As currently Codemodel Rifle does not analyse or return anything, this script is only for importing purposes. In the future, the returned analysis values has to be printed, which has to be implemented in the script.
+* As Codemodel Rifle currently does not analyse or return anything, this script is now only for importing purposes. In the future, the returned analysis values has to be printed, which has to be implemented in the script.
 * Codemodel Rifle server can handle various Cypher queries. We need the possibility of any external query input, in order to specify additional custom analysis and transformation queries.
