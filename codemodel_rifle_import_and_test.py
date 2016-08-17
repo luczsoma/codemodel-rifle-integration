@@ -19,7 +19,8 @@ import atexit
 class Logger(object):
     """Basic logger class
 
-    Every output of the script has to be through a Logger instance's print_log() method."""
+    Every output of the script has to be through a Logger instance's print_log() method.
+    """
 
     def __init__(self, verbose, debug):
         self.verbose = verbose
