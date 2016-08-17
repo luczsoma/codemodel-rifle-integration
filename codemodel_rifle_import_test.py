@@ -14,7 +14,6 @@ import sys
 import json
 import errno
 import atexit
-import time
 
 
 class Logger(object):
